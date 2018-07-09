@@ -1,0 +1,233 @@
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteY="81dp">
+
+    <LinearLayout
+        app:layout_heightPercent="50%"
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/undo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/send"
+            app:layout_constraintTop_toTopOf="@+id/send"
+            app:srcCompat="@drawable/save" />
+
+        <ImageView
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/save"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/addPicture"
+            app:layout_constraintTop_toTopOf="@+id/addPicture"
+            app:srcCompat="@drawable/send" />
+
+        <ImageView
+            android:id="@+id/fontH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/fontGap"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fontW"
+            app:layout_constraintTop_toTopOf="@+id/fontW"
+            app:srcCompat="@drawable/f_h" />
+
+        <ImageView
+            android:id="@+id/fontGap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/fontStyle"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fontH"
+            app:layout_constraintTop_toTopOf="@+id/fontH"
+            app:srcCompat="@drawable/f_gap" />
+
+        <ImageView
+            android:id="@+id/fontW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/fontH"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/f_w" />
+
+        <ImageView
+            android:id="@+id/fontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/addText"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fontGap"
+            app:layout_constraintTop_toTopOf="@+id/fontGap"
+            app:srcCompat="@drawable/font" />
+
+        <ImageView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/addPicture"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/addText"
+            app:layout_constraintTop_toTopOf="@+id/addText"
+            app:srcCompat="@drawable/timer" />
+
+        <ImageView
+            android:id="@+id/undo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/save"
+            app:layout_constraintTop_toTopOf="@+id/save"
+            app:srcCompat="@drawable/undo" />
+
+        <ImageView
+            android:id="@+id/addText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/time"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fontStyle"
+            app:layout_constraintTop_toTopOf="@+id/fontStyle"
+            app:srcCompat="@drawable/txt" />
+
+        <ImageView
+            android:id="@+id/addPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toStartOf="@+id/send"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/time"
+            app:layout_constraintTop_toTopOf="@+id/time"
+            app:srcCompat="@drawable/pic" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        app:layout_heightPercent="50%"
+        android:layout_below="@id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="甲"
+            app:layout_constraintEnd_toStartOf="@+id/gb"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fontW" />
+
+        <Button
+            android:id="@+id/gb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GB"
+            app:layout_constraintEnd_toStartOf="@+id/e0"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/first"
+            app:layout_constraintTop_toTopOf="@+id/first" />
+
+        <Button
+            android:id="@+id/e0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="E0"
+            app:layout_constraintEnd_toStartOf="@+id/e1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/gb"
+            app:layout_constraintTop_toTopOf="@+id/gb" />
+
+        <Button
+            android:id="@+id/e1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="E1"
+            app:layout_constraintEnd_toStartOf="@+id/e2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/e0"
+            app:layout_constraintTop_toTopOf="@+id/e0" />
+
+        <Button
+            android:id="@+id/e2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="E2"
+            app:layout_constraintEnd_toStartOf="@+id/produceTime"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/e1"
+            app:layout_constraintTop_toTopOf="@+id/e1" />
+
+        <Button
+            android:id="@+id/produceTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="生"
+            app:layout_constraintEnd_toStartOf="@+id/validateTime"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/e2"
+            app:layout_constraintTop_toTopOf="@+id/e2" />
+
+        <Button
+            android:id="@+id/validateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="有"
+            app:layout_constraintEnd_toStartOf="@+id/batchNumber"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/produceTime"
+            app:layout_constraintTop_toTopOf="@+id/produceTime" />
+
+        <Button
+            android:id="@+id/batchNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="批"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/validateTime"
+            app:layout_constraintTop_toTopOf="@+id/validateTime" />
+
+    </LinearLayout>
+
+</android.support.percent.PercentRelativeLayout>

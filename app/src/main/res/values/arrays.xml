@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="time_formatter">
+        <item>yyyy.mm.dd</item>
+        <item>hh:mm:ss</item>
+        <item>yyyy.mm.dd hh:mm:ss</item>
+        <item>yyyy/mm/dd hh:mm:ss</item>
+        <item>yyyy.mm.dd hh:mm</item>
+        <item>hh:mm</item>
+    </string>
+
+</resources>
