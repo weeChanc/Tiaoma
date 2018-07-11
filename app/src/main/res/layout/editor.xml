@@ -6,15 +6,15 @@
     tools:layout_editor_absoluteY="81dp">
 
     <LinearLayout
-        app:layout_heightPercent="50%"
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_heightPercent="50%">
 
         <ImageView
             android:id="@+id/save"
@@ -130,14 +130,14 @@
 
 
     <LinearLayout
-        app:layout_heightPercent="50%"
-        android:layout_below="@id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_heightPercent="50%">
 
         <Button
             android:id="@+id/first"

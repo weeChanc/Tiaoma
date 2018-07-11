@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Entrance">
+
+    <LinearLayout
+        android:id="@+id/up"
+        app:layout_heightPercent="35%"
+        app:layout_widthPercent="100%"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/three_single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/three_single" />
+
+        <ImageView
+            android:id="@+id/two_single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/two_single" />
+
+        <ImageView
+            android:id="@+id/two_combine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/two_combine" />
+
+        <ImageView
+            android:id="@+id/single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/one" />
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_below="@+id/up"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_heightPercent="35%"
+        app:layout_widthPercent="100%">
+
+        <ImageView
+            android:id="@+id/four_combine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/fou_combine" />
+
+        <ImageView
+            android:id="@+id/four_single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/four_single" />
+
+        <ImageView
+            android:id="@+id/three_combine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/three_combine" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="253dp"
+        android:text="Button" />
+
+
+</android.support.percent.PercentRelativeLayout>

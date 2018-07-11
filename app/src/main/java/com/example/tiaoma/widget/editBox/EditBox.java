@@ -4,23 +4,16 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 
 import com.example.tiaoma.R;
-import com.example.tiaoma.db.TextProperty;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.example.tiaoma.bean.TextProperty;
 
 /**
  * 包含刻度尺和TextViewGroup
@@ -36,10 +29,15 @@ public class EditBox extends HorizontalScrollView {
 
     public EditBox(Context context) {
         super(context);
+        init(context);
     }
 
     public EditBox(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        init(context);
+    }
+
+    private void init(Context context){
         LayoutInflater.from(context).inflate(R.layout.ruler, this);
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         scale = findViewById(R.id.scale);
@@ -52,9 +50,7 @@ public class EditBox extends HorizontalScrollView {
                 touchY = e.getY();
                 performClick();
             }
-
             return detector.onTouchEvent(e);
-
         });
     }
 
@@ -67,7 +63,6 @@ public class EditBox extends HorizontalScrollView {
     }
 
     public Bitmap getTextBitmap() {
-
         disableMarker();
         if (textGroup.getMeasuredHeight() > 0) {
             textGroup.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -83,7 +78,6 @@ public class EditBox extends HorizontalScrollView {
             matrix.postScale(s,s);
             return Bitmap.createBitmap(b,0,0,b.getWidth(),b.getHeight(),matrix,true);
         }
-
 
         return null;
     }

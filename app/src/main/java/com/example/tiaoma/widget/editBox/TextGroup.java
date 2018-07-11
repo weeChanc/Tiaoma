@@ -1,6 +1,7 @@
 package com.example.tiaoma.widget.editBox;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -9,23 +10,21 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.tiaoma.db.TextProperty;
+import com.example.tiaoma.bean.TextProperty;
 import com.example.tiaoma.utils.DensityUtil;
 
 /**
  * 插入TextView控件
  */
-public class TextGroup extends LinearLayout {
+public class TextGroup extends FrameLayout {
 
     private Marker marker;
     //    private Scale scale;
-
-
-    private float textSize = 22;
 
     private HorizontalScrollView scrollView;
 
@@ -36,7 +35,7 @@ public class TextGroup extends LinearLayout {
     public TextGroup(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         marker = new Marker(context);
-        MarginLayoutParams lp = new MarginLayoutParams(3, DensityUtil.sp2px(getContext(), textSize));
+        MarginLayoutParams lp = new MarginLayoutParams(3, DensityUtil.sp2px(getContext(), 22));
         marker.setLayoutParams(lp);
         addView(marker);
     }
@@ -63,8 +62,9 @@ public class TextGroup extends LinearLayout {
         tv.setLetterSpacing(property.getLetterSpacing());
         tv.setTextSize(property.getTextSize());
         tv.setText(builder);
+        tv.setTextColor(Color.BLACK);
 //        tv.setIncludeFontPadding(false);
-        MarginLayoutParams lp = new MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.leftMargin = property.getX();
         tv.setLayoutParams(lp);
         //获取属性,添加View
@@ -82,8 +82,6 @@ public class TextGroup extends LinearLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
-
 
         measureChildren(widthMeasureSpec, heightMeasureSpec);
         int count = getChildCount();
@@ -122,7 +120,6 @@ public class TextGroup extends LinearLayout {
             setMeasuredDimension(width, height);
             return;
         }
-
 
         setMeasuredDimension(wmax, hmax);
 

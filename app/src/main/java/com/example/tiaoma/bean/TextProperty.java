@@ -1,4 +1,4 @@
-package com.example.tiaoma.db;
+package com.example.tiaoma.bean;
 
 public class TextProperty implements Cloneable{
 

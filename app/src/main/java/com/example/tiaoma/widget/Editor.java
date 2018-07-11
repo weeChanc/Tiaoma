@@ -1,11 +1,11 @@
 package com.example.tiaoma.widget;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -18,20 +18,25 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.ToastUtils;
+import com.example.tiaoma.App;
 import com.example.tiaoma.R;
-import com.example.tiaoma.db.RecordModel;
-import com.example.tiaoma.db.TextProperty;
-import com.example.tiaoma.db.EditBoxsRecord;
+import com.example.tiaoma.bean.EditBoxsRecord;
+import com.example.tiaoma.bean.TextProperty;
+import com.example.tiaoma.db.entity.EditBoxRecord;
 import com.example.tiaoma.utils.DigitUtils;
 import com.example.tiaoma.widget.editBox.EditBox;
 
-import java.io.ByteArrayInputStream;
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -69,8 +74,6 @@ public class Editor extends FrameLayout {
     private EditBoxsRecord record;
 
 
-
-
     public Editor(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.editor, this);
@@ -78,28 +81,17 @@ public class Editor extends FrameLayout {
         setListener();
     }
 
-    /**
-     * 旋转屏幕恢复设置
-     * 要在ONCREATE后调用
-     */
-    public void init() {
 
-        if (getContext() instanceof FragmentActivity)
-            record = ViewModelProviders.of((FragmentActivity) getContext()).get(RecordModel.class).getRecord();
-
-        for (int i = 0; i < record.getEditBoxsCount(); i++) {
-            activeBox(editBoxes.get(i));
-            for (TextProperty widgetProperty : record.getWidgetPropertiesAt(i)) {
-                activeBox.addText(widgetProperty);
-            }
-        }
+    public void setRecord(EditBoxsRecord record) {
+        this.record = record;
+        Log.e("Editor", editBoxes.size() + "");
+        this.record.match(editBoxes.size());
     }
 
     public void addEditBox(EditBox editBox) {
-
         if (editBoxes.size() == 0) {
             editBox.setActive(true);
-        }else{
+        } else {
             //其他box要取消
             editBox.disableMarker();
         }
@@ -185,7 +177,7 @@ public class Editor extends FrameLayout {
                     .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                         @Override
                         public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                            property.setContent(new SimpleDateFormat(text.toString(),Locale.CHINA).format(new Date(System.currentTimeMillis())));
+                            property.setContent(new SimpleDateFormat(text.toString(), Locale.CHINA).format(new Date(System.currentTimeMillis())));
                             addText(property);
                             return true;
                         }
@@ -235,38 +227,53 @@ public class Editor extends FrameLayout {
         });
 
         undo.setOnClickListener(v -> {
-
             record.popWidgetPropertyesAt(activeBoxPosition);
             getActiveEditBox().undo();
-
         });
 
         save.setOnClickListener(v -> {
-            try {
-                new File(
-                        Environment
-                                .getExternalStorageDirectory()
-                                .getPath() + "/output.png").createNewFile();
 
+            new MaterialDialog.Builder(getContext())
+                    .title("请命名")
+                    .inputType(InputType.TYPE_NUMBER_FLAG_DECIMAL)
+                    .input("标题", null, (dialog, input) -> {
+                        EditBoxRecord record = this.record.toEditBoxRecord();
+                        record.setName(input.toString());
+                        App.getApp().getExecutors().diskIO().execute(() -> {
+                            App.getApp().getDb().editBoxRecordDao().insert(record);
+                            App.getApp().getExecutors().mainThread().execute(() -> {
+                                ToastUtils.showShort("保存成功");
+                            });
+                        });
+                    }).show();
 
-                getActiveEditBox().getTextBitmap().compress(Bitmap.CompressFormat.PNG, 100,
-                        new FileOutputStream(new File(
-                                Environment
-                                        .getExternalStorageDirectory()
-                                        .getPath() + "/output.png")));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         });
 
         send.setOnClickListener(v -> {
             Bitmap bitmap = getActiveEditBox().getTextBitmap();
-            for (int i = 0; i < bitmap.getRowBytes(); i++) {
-                for (int j = 0; j < bitmap.getHeight(); j++) {
-                    Log.e("Editor",i+ " " + j );
+            BitSet bitSet = new BitSet();
+
+            int i = 0;
+            for (; i < bitmap.getWidth(); i++) {
+                for (int j = 0; j < 320; j++) {
+
+                    if (j >= 300) {
+                        bitSet.set(j + 320 * i, false);
+                        continue;
+                    }
+
+                    if (Color.alpha(bitmap.getPixel(i, j)) == 0) {
+                        bitSet.set(j + 320 * i, false);
+                    } else {
+                        bitSet.set(j + 320 * i, true);
+                    }
                 }
             }
+            bitSet.set(320 * (i - 1) + 320, true);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] bytes = bitSet.toByteArray();
+            baos.write(bytes, 0, bytes.length - 1);
         });
 
     }
@@ -302,22 +309,21 @@ public class Editor extends FrameLayout {
 
     private void addText(TextProperty property) {
         EditBox box = getActiveEditBox();
-
         if (box == null) {
             ToastUtils.showShort("请选择输入框");
             return;
         }
-
         property.setX(box.getMarkerPos());
         box.addText(property);
-
-        while (record.getEditBoxsCount() < editBoxes.size()) {
-            //初始化记录数量
-            record.addEditBox(new ArrayList<>());
-        }
         record.addWidgetPropertyesAt(activeBoxPosition, property.clone());
-
-
     }
 
+    public void reFreshByRecord() {
+        for (int i = 0; i < this.record.getEditBoxsCount(); i++) {
+            activeBox(editBoxes.get(i));
+            for (TextProperty widgetProperty : this.record.getWidgetPropertiesAt(i)) {
+                activeBox.addText(widgetProperty);
+            }
+        }
+    }
 }

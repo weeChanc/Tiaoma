@@ -12,7 +12,6 @@ import android.view.View;
 public class Marker extends View {
 
     private Paint mPaint = new Paint();
-    private Handler handler = new Handler();
     private int position = 0;
 
 
@@ -40,7 +39,7 @@ public class Marker extends View {
                 }
 
                 invalidate();
-                handler.postDelayed(this, 800);
+                postDelayed(this, 800);
             }
         }.run();
     }
