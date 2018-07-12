@@ -1,5 +1,7 @@
 package com.example.tiaoma.bean;
 
+import android.graphics.Typeface;
+
 public class TextProperty implements Cloneable{
 
     //内容
@@ -10,8 +12,18 @@ public class TextProperty implements Cloneable{
     private float letterSpacing = 0.0f;
     //字体大小
     private float textSize = 22;
+
+    private String typeface;
     //leftMargin - 偏移值
     private int x;
+
+    public String getTypeface() {
+        return typeface;
+    }
+
+    public void setTypeface(String typeface) {
+        this.typeface = typeface;
+    }
 
     public float getTextSize() {
         return textSize;

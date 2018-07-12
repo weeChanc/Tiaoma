@@ -5,15 +5,12 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.support.percent.PercentLayoutHelper;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tiaoma.bean.EditBoxsRecord;
-import com.example.tiaoma.db.entity.EditBoxRecord;
 import com.example.tiaoma.model.RecordModel;
 import com.example.tiaoma.widget.Editor;
 import com.example.tiaoma.widget.editBox.EditBox;
@@ -53,15 +50,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void show(EditBoxsRecord record) {
-
         EventBus.getDefault().removeStickyEvent(record);
 
+        //这是时候则是Entrance传入的Model,需要恢复并转入Viewmodel,否则是旋转屏幕导致的触发
         if (record != recordModel.getRecord()) {
             recordModel.setRecord(record);
         }
+        resumeRecord(record);
+        container.requestLayout();
+    }
 
+    private void resumeRecord(EditBoxsRecord record){
+        //? 未知判断,忘记了!
         if (record.getCount() != 0) {
-
             int preId = View.generateViewId();
             EditBox preBox = new EditBox(this);
             preBox.setId(preId);
@@ -91,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         editor.setRecord(record);
-        editor.reFreshByRecord();
-        container.requestLayout();
+        editor.refreshByRecord();
     }
 }
 

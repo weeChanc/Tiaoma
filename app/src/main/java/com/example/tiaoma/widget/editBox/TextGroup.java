@@ -2,6 +2,7 @@ package com.example.tiaoma.widget.editBox;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -40,14 +41,13 @@ public class TextGroup extends FrameLayout {
         addView(marker);
     }
 
-    public void enableMarker(){
-        addView(marker,0);
+    public void enableMarker() {
+        addView(marker, 0);
     }
 
-    public void disableMarker(){
+    public void disableMarker() {
         removeView(marker);
     }
-
 
 
     public void addText(TextProperty property) {
@@ -63,6 +63,9 @@ public class TextGroup extends FrameLayout {
         tv.setTextSize(property.getTextSize());
         tv.setText(builder);
         tv.setTextColor(Color.BLACK);
+
+        if (property.getTypeface() != null)
+            tv.setTypeface(Typeface.createFromAsset(getContext().getAssets(), property.getTypeface()));
 //        tv.setIncludeFontPadding(false);
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.leftMargin = property.getX();
@@ -75,9 +78,9 @@ public class TextGroup extends FrameLayout {
         setMarkerPos(marker.getPosition() + tv.getMeasuredWidth());
     }
 
-    public void removeView(){
-        if(getChildCount() > 1)
-            removeViewAt(getChildCount()-1);
+    public void removeView() {
+        if (getChildCount() > 1)
+            removeViewAt(getChildCount() - 1);
     }
 
     @Override

@@ -38,8 +38,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -73,12 +75,32 @@ public class Editor extends FrameLayout {
     private List<EditBox> editBoxes = new ArrayList<>(4);
     private EditBoxsRecord record;
 
+    private Map<String,String> typeFaceMap = new HashMap<>();
+
 
     public Editor(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.editor, this);
         findView();
         setListener();
+        initMap();
+    }
+
+    private void initMap(){
+        typeFaceMap.put("华文行楷","xingkai.ttf");
+        typeFaceMap.put("华文琥珀","hupo.ttf");
+        typeFaceMap.put("方正繁宋体","songfanti.ttf");
+        typeFaceMap.put("华文彩云","caiyun.ttf");
+        typeFaceMap.put("方正繁楷体","kaifanti.ttf");
+        typeFaceMap.put("黑体","simhei.ttf");
+        typeFaceMap.put("楷体","simkai.ttf");
+        typeFaceMap.put("隶书","simli.ttf");
+        typeFaceMap.put("宋体","simsun.ttf");
+        typeFaceMap.put("幼圆","simyou.ttf");
+        typeFaceMap.put("5*8点阵","en58.ttf");
+        typeFaceMap.put("微软雅黑","yahei.ttf");
+        typeFaceMap.put("方正繁黑体","heifanti.ttf");
+        typeFaceMap.put("16*16点阵","fangzheng16.ttf");
     }
 
 
@@ -276,6 +298,24 @@ public class Editor extends FrameLayout {
             baos.write(bytes, 0, bytes.length - 1);
         });
 
+        fontStyle.setOnClickListener(v -> {
+            new MaterialDialog.Builder(getContext())
+                    .title("设置文本字体")
+                    .items(new String[]{"宋体", "黑体", "楷体", "5*8点阵", "16*16点阵", "微软雅黑",
+                            "隶书", "幼圆", "华文彩云", "华文琥珀", "华文行楷", "方正繁黑体", "方正繁楷体",
+                            "方正繁宋体"})
+                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                        @Override
+                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            property.setTypeface(typeFaceMap.get(text.toString()));
+                            return true;
+                        }
+                    })
+                    .positiveText("确定")
+                    .negativeText("取消")
+                    .show();
+        });
+
     }
 
     private EditBox getActiveEditBox() {
@@ -318,7 +358,10 @@ public class Editor extends FrameLayout {
         record.addWidgetPropertyesAt(activeBoxPosition, property.clone());
     }
 
-    public void reFreshByRecord() {
+    /**
+     * 根据记录给每个box加入字体
+     */
+    public void refreshByRecord() {
         for (int i = 0; i < this.record.getEditBoxsCount(); i++) {
             activeBox(editBoxes.get(i));
             for (TextProperty widgetProperty : this.record.getWidgetPropertiesAt(i)) {
