@@ -3,6 +3,7 @@ package com.example.tiaoma.widget.editBox;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -59,7 +60,9 @@ public class TextGroup extends FrameLayout {
         TextView tv = new TextView(getContext());
 
         builder.setSpan(new ScaleXSpan(property.getFontScaleRatio()), 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv.setLetterSpacing(property.getLetterSpacing());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tv.setLetterSpacing(property.getLetterSpacing());
+        }
         tv.setTextSize(property.getTextSize());
         tv.setText(builder);
         tv.setTextColor(Color.BLACK);
@@ -67,7 +70,7 @@ public class TextGroup extends FrameLayout {
         if (property.getTypeface() != null)
             tv.setTypeface(Typeface.createFromAsset(getContext().getAssets(), property.getTypeface()));
 //        tv.setIncludeFontPadding(false);
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.leftMargin = property.getX();
         tv.setLayoutParams(lp);
         //获取属性,添加View

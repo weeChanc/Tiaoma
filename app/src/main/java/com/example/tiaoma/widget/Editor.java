@@ -320,11 +320,21 @@ public class Editor extends FrameLayout {
 
     private void saveBitmap(Bitmap bitmap){
         try {
+            Log.e("SAVE",bitmap.getHeight() + "  "+ bitmap.getWidth() );
+
+            new File(Environment.getExternalStorageDirectory().getPath()
+                        +"/output.png").deleteOnExit();
+
+            new File(Environment.getExternalStorageDirectory().getPath()
+                    +"/output.png").createNewFile();
+
             bitmap.compress(Bitmap.CompressFormat.PNG,100,
                     new FileOutputStream(
                             new File(Environment.getExternalStorageDirectory().getPath()
                                     +"/output.png")));
-        } catch (FileNotFoundException e) {
+
+            Log.e("SAVE FINSIH","SAVE FINSI");
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
