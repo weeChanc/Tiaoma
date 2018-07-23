@@ -44,7 +44,7 @@ public class Test extends AppCompatActivity {
 
         Bitmap bitmap = null;
         try {
-            bitmap = BitmapFactory.decodeStream(new FileInputStream(new File(Environment.getExternalStorageDirectory().getPath()+"/test.png")));
+            bitmap = BitmapFactory.decodeStream(new FileInputStream(new File(Environment.getExternalStorageDirectory().getPath()+"/output.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

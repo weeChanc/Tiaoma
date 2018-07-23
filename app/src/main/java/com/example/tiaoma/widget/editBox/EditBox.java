@@ -78,6 +78,7 @@ public class EditBox extends HorizontalScrollView {
             matrix.postScale(s,s);
             return Bitmap.createBitmap(b,0,0,b.getWidth(),b.getHeight(),matrix,true);
         }
+        enableMarker();
 
         return null;
     }

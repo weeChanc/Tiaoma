@@ -2,6 +2,7 @@ package com.example.tiaoma;
 
 import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.percent.PercentLayoutHelper;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.ActivityCompat;
@@ -40,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
         editor = findViewById(R.id.editor);
         show(recordModel.getRecord());
         EventBus.getDefault().register(this);
+
+        editor.setOnLongClickListener(v -> {
+            startActivity(new Intent(this,Test.class));
+            return true;
+        });
     }
 
     @Override

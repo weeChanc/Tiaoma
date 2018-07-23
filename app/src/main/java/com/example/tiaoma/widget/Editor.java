@@ -274,7 +274,7 @@ public class Editor extends FrameLayout {
         send.setOnClickListener(v -> {
             Bitmap bitmap = getActiveEditBox().getTextBitmap();
             BitSet bitSet = new BitSet();
-
+            saveBitmap(bitmap);
             int i = 0;
             for (; i < bitmap.getWidth(); i++) {
                 for (int j = 0; j < 320; j++) {
@@ -317,6 +317,18 @@ public class Editor extends FrameLayout {
         });
 
     }
+
+    private void saveBitmap(Bitmap bitmap){
+        try {
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,
+                    new FileOutputStream(
+                            new File(Environment.getExternalStorageDirectory().getPath()
+                                    +"/output.png")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private EditBox getActiveEditBox() {
 

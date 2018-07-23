@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Test">
-
-    <!--<FrameLayout-->
-        <!--android:id="@+id/frame"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-    <!--</FrameLayout>-->
+    tools:context=".Test"
+    android:orientation="vertical">
 
     <com.example.tiaoma.widget.BitSetDrawer
         android:id="@+id/bitSetDrawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="100dp" />
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/circle" />
 </LinearLayout>

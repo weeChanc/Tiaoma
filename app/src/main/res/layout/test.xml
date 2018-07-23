@@ -22,4 +22,7 @@
             android:layout_weight="1"
             android:text="TextView" />
     </com.example.tiaoma.widget.editBox.TextGroup>
+
+
+
 </FrameLayout>
